@@ -240,7 +240,7 @@ public class Vorstellung
     {
         assert platz != null : "Vorbedingung verletzt: platz != null";
         assert hatPlatz(platz) : "Vorbedingung verletzt: hatPlatz(platz)";
-        assert istPlatzVerkauft(platz) : "Vorbedingung verletzt: istPlatzVerkauft(platz)";
+//        assert istPlatzVerkauft(platz) : "Vorbedingung verletzt: istPlatzVerkauft(platz)";
 
         _verkauft[platz.getReihenNr()][platz.getSitzNr()] = false;
         _anzahlVerkauftePlaetze--;
@@ -310,7 +310,7 @@ public class Vorstellung
     {
         assert plaetze != null : "Vorbedingung verletzt: plaetze != null";
         assert hatPlaetze(plaetze) : "Vorbedingung verletzt: hatPlaetze(plaetze)";
-        assert sindStornierbar(plaetze) : "Vorbedingung verletzt: sindStornierbar(plaetze)";
+//        assert sindStornierbar(plaetze) : "Vorbedingung verletzt: sindStornierbar(plaetze)";
 
         for (Platz platz : plaetze)
         {

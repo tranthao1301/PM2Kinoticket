@@ -40,7 +40,7 @@ public class PlatzVerkaufsWerkzeug
         registriereUIAktionen();
         // Am Anfang wird keine Vorstellung angezeigt:
         setVorstellung(null);
-//        _barzahlung = new BarzahlungsWerkzeug();
+
     }
 
     /**
@@ -60,32 +60,38 @@ public class PlatzVerkaufsWerkzeug
     private void registriereUIAktionen()
     {
     
-        _ui.getVerkaufenButton().setOnAction(new EventHandler<ActionEvent>()
-                {
-                    @Override
-                    public void handle(ActionEvent ae)
-                    {
+        _ui.getVerkaufenButton().setOnAction(event -> {
+//        		new EventHandler<ActionEvent>()
+//                {
+//                    @Override
+//                    public void handle(ActionEvent ae)
+//                    {
                        _barzahlung = new BarzahlungsWerkzeug();
                         _barzahlung.setPreis(_preisFuerAuswahl);
-                        _barzahlung.startUp();
-                        if(!_barzahlung.istGueltig())
+                        boolean result = _barzahlung.fuehreBezahlungDurch();
+                        
+                        System.out.println("Ist gültig: " + _barzahlung.istGueltig());
+                        
+                        if(!result)
                         {
                         	stornierePlaetze(_vorstellung);
                         }
                         else 
                         {
-                        verkaufePlaetze(_vorstellung);
+                        	verkaufePlaetze(_vorstellung);
                         }
-                    }
+//                    }
                 });
 
-        _ui.getStornierenButton().setOnAction(new EventHandler<ActionEvent>()
-                {
-                    @Override
-                    public void handle(ActionEvent ae)
-                    {
+        _ui.getStornierenButton().setOnAction(
+        		event -> {
+//        		new EventHandler<ActionEvent>()
+//                {
+//                    @Override
+//                    public void handle(ActionEvent ae)
+//                    {
                         stornierePlaetze(_vorstellung);
-                    }
+//                    }
                 });
 
         _ui.getPlatzplan().addPlatzSelectionListener(

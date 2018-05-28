@@ -51,12 +51,7 @@ public class BarzahlungsWerkzeugUI {
 	
 	private void start()
 	{
-//		if(preis <= 0 || titel == null || kinosaal == null)
-//		{
-//			System.out.println("ERROR");
-//		}
-//		else
-//		{
+
 		_stage = new Stage();	
 		_stage.setTitle(TITEL);
 		_bezahlEingabe = new TextField();
@@ -64,8 +59,7 @@ public class BarzahlungsWerkzeugUI {
 		_rueckGeld = new Text("");
 		_okButton = new Button("OK");
 		_abbrechenButton = new Button("Abbrechen");
-//		_preisZuZahlen = new Text(Integer.toString(preis));
-//		_preisLabel.setText("Preis: " + _preisZuZahlen.getText() + "€");
+
 	
 		GridPane grid = new GridPane();
 		grid.setHgap(15);
@@ -84,13 +78,13 @@ public class BarzahlungsWerkzeugUI {
 		_stage.setMinHeight(250);
 		_stage.setMinWidth(400);
 		_stage.setScene(scene);
-		_stage.show();
-//		}
+//		_stage.show();
+
 	}
 	
 	public void showConfirm()
 	{
-		Alert alert = new Alert(AlertType.CONFIRMATION);
+		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("Abbrechen");
 		alert.setContentText("Sind Sie sicher?");
 		Optional<ButtonType> result = alert.showAndWait();
@@ -98,6 +92,30 @@ public class BarzahlungsWerkzeugUI {
 		{
 			_gueltig = false;
 			schliesseFenster();
+		}
+	}
+	
+	public void showEnd()
+	{
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle("Abschließen");
+		alert.setContentText("Viel Spaß!");
+		Optional<ButtonType> result = alert.showAndWait();
+		if(result.get() == ButtonType.OK)
+		{
+			schliesseFenster();
+		}
+	}
+	
+	public void showNotEnough()
+	{
+		Alert alert = new Alert(AlertType.WARNING);
+		alert.setTitle("Warning");
+		alert.setContentText("Nicht genug Geld bezahlt!");
+		Optional<ButtonType> result = alert.showAndWait();
+		if(result.get() == ButtonType.OK)
+		{
+			alert.close();
 		}
 	}
 	
@@ -129,7 +147,7 @@ public class BarzahlungsWerkzeugUI {
 		
 	public void zeigeAn()
 	{
-		_stage.show();
+		_stage.showAndWait();
 	}
 	
 	public void schliesseFenster()
