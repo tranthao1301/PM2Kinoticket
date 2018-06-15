@@ -12,6 +12,7 @@ import org.junit.Test;
 
 import de.hawhh.informatik.sml.kino.fachwerte.Datum;
 import de.hawhh.informatik.sml.kino.fachwerte.FSK;
+import de.hawhh.informatik.sml.kino.fachwerte.Geldbetrag;
 import de.hawhh.informatik.sml.kino.fachwerte.Platz;
 import de.hawhh.informatik.sml.kino.fachwerte.Uhrzeit;
 
@@ -73,7 +74,7 @@ public class KinoTest
         _vorstellungSaal1Film0 = new Vorstellung(_saal1, _film0, _u1, _u2, _d1,
                 900);
         _vorstellungSaal2Film1 = new Vorstellung(_saal2, _film1, _u1, _u2, _d1,
-                1000);
+               1000);
         _vorstellungSaal2Film2a = new Vorstellung(_saal2, _film2, _u2, _u3,
                 _d1, 900);
         _vorstellungSaal2Film2b = new Vorstellung(_saal2, _film2, _u3, _u4,

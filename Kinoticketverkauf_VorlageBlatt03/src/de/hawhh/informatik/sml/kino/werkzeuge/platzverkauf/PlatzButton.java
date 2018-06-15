@@ -19,11 +19,13 @@ class PlatzButton extends Button
     private static final String FARBE_FREI = "lightgreen; ";
     private static final String FARBE_VERKAUFT = "coral; ";
     private static final String FARBE_AUSGEWAEHLT = "yellow; ";
+    private static final String FARBE_RESERVIERT = "blue;";
 
 
     private Platz _platz;
     private boolean _verkauft;
     private boolean _ausgewaehlt;
+    private boolean _reserviert;
 
     /**
      * Initialisiert einen neuen Button, der mit der Nummer des Sitzes in
@@ -77,6 +79,12 @@ class PlatzButton extends Button
                         "-fx-background-radius: 6, 5;" +
                         " -fx-background-insets: 0, 0 0 2 2;");
             }
+            else if(_reserviert)
+            {
+            	setStyle("-fx-background-color: darkgrey, " + FARBE_RESERVIERT +
+                        "-fx-background-radius: 6, 5;" +
+                        " -fx-background-insets: 0, 0 0 2 2;");
+            }
             else
             {
               setStyle("-fx-background-color: darkgrey, " + FARBE_FREI +
@@ -121,5 +129,16 @@ class PlatzButton extends Button
     {
         _ausgewaehlt = ausgewaehlt;
         setzeFarbe();
+    }
+    
+    public void setReserviert(boolean reserviert)
+    {
+    	_reserviert = reserviert;
+    	setzeFarbe();
+    }
+    
+    public boolean istReserviert()
+    {
+    	return _reserviert;
     }
 }

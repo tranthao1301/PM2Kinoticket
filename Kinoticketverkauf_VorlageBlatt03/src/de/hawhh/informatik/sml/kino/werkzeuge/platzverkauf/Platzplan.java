@@ -1,5 +1,6 @@
 package de.hawhh.informatik.sml.kino.werkzeuge.platzverkauf;
 
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -250,6 +251,13 @@ class Platzplan extends GridPane
         assert platz != null : "Vorbedingung verletzt: platz != null";
         _buttons[platz.getReihenNr()][platz.getSitzNr()].setVerkauft(false);
 //        repaint();
+    }
+    
+    public void markierePlatzsAlsReserviert(Platz platz)
+    {
+    	assert platz != null : "Vorbedingung verletzt: platz != null";
+    	 _buttons[platz.getReihenNr()][platz.getSitzNr()].setReserviert(true);
+    	
     }
 
 }

@@ -4,6 +4,7 @@ import javafx.event.EventHandler;
 
 import java.util.Optional;
 
+import de.hawhh.informatik.sml.kino.fachwerte.Geldbetrag;
 import de.hawhh.informatik.sml.kino.werkzeuge.ObservableSubwerkzeug;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Alert;
@@ -15,8 +16,9 @@ import javafx.scene.input.KeyEvent;
 public class BarzahlungsWerkzeug extends ObservableSubwerkzeug {
 
 	private BarzahlungsWerkzeugUI _ui;
-//	private int _preisZuZahlen = -1;
-	private int _preisZuZahlen;
+//	TODO: _preisZuZahlen als Geldbetrag zu initialisieren
+	private Geldbetrag _preisZuZahlen;
+	private boolean _ausreichenderBetrag;
 	
 
 //	public BarzahlungsWerkzeug(int preis, String titel, String kinosaal) {
@@ -34,7 +36,8 @@ public class BarzahlungsWerkzeug extends ObservableSubwerkzeug {
 //	public void startUp()
 	public boolean fuehreBezahlungDurch()
 		{
-			_ui.getPreisLabel().setText("Preis: " + _preisZuZahlen + "Eurocent");
+			_ui.getPreisLabel().setText("Preis: " + _preisZuZahlen.toBetragsstring() + "€");
+			_ausreichenderBetrag = false;
 			registriereUIAktionen();
 			_ui.zeigeAn();
 			return istGueltig();
@@ -55,8 +58,8 @@ public class BarzahlungsWerkzeug extends ObservableSubwerkzeug {
 		_ui.getOKButton().setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent ae) {
-				int bezahlt = Integer.parseInt(_ui.getBezahlEingabe().getText());
-				if(_preisZuZahlen <= bezahlt)
+				
+				if(_ausreichenderBetrag)
 				{
 				_ui.showEnd();
 				}
@@ -66,15 +69,19 @@ public class BarzahlungsWerkzeug extends ObservableSubwerkzeug {
 				}
 			}
 		});
+		// TODO: Eingabe als Fachwerttyp und die Berechnungen mit Fachwerttyp durchführen
 		_ui.getBezahlEingabe().setOnKeyPressed(new EventHandler<KeyEvent>() {
 			@Override
 			public void handle(KeyEvent ke) {
 				if (ke.getCode() == KeyCode.ENTER) {
-					int bezahlt = Integer.parseInt(_ui.getBezahlEingabe().getText());
-					int difference = bezahlt - _preisZuZahlen;
+					
+					Geldbetrag eingabeBetrag = Geldbetrag.strconv(_ui.getBezahlEingabe().getText());
+					_ausreichenderBetrag = (_preisZuZahlen.kleinerGleich(eingabeBetrag));
+					Geldbetrag differenz = eingabeBetrag.sub(_preisZuZahlen);
+					
 					
 					String output = "";
-					if(bezahlt < 0)
+					if(_ui.getBezahlEingabe().getText().contains("-"))
 					{
 						Alert negBetrag = new Alert(AlertType.WARNING);
 						negBetrag.setTitle("Warning");
@@ -87,18 +94,20 @@ public class BarzahlungsWerkzeug extends ObservableSubwerkzeug {
 						
 					}
 					
-					else if (difference > 0) {
-						output = (difference  + "Eurocent");
+					
+					else if (differenz.eurocent() > 0) {
+						output = (differenz.toBetragsstring()  + "€");
 					}
-					else if (difference < 0)
+					else if (differenz.eurocent() < 0)
 					{
-						output = (difference + "Eurocent");
+						output = ("-" + differenz.toBetragsstring() + "€");
 					}
 					else
 					{
-						output = "0 Eurocent";
+						output = "0 €";
 					}
 					_ui.getRueckGeldTextFeld().setText(output);
+					_ui.getBezahlEingabe().setText("");
 				}
 			}
 		});
@@ -106,10 +115,10 @@ public class BarzahlungsWerkzeug extends ObservableSubwerkzeug {
 	
 	public int getPreis()
 	{
-		return _preisZuZahlen;
+		return _preisZuZahlen.eurocent();
 	}
 	
-	public void setPreis(int preis)
+	public void setPreis(Geldbetrag preis)
 	{
 		this._preisZuZahlen = preis;
 	}

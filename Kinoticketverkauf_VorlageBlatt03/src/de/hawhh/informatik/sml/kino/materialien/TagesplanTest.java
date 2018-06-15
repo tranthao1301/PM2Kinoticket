@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import de.hawhh.informatik.sml.kino.fachwerte.Datum;
 import de.hawhh.informatik.sml.kino.fachwerte.FSK;
+import de.hawhh.informatik.sml.kino.fachwerte.Geldbetrag;
 import de.hawhh.informatik.sml.kino.fachwerte.Uhrzeit;
 
 public class TagesplanTest
@@ -24,7 +25,7 @@ public class TagesplanTest
     private static final Vorstellung _vorstellung2 = new Vorstellung(_kinosaal,
             _film, _startzeit2, _endzeit, _datum, 0);
     private static final Vorstellung _vorstellung3 = new Vorstellung(
-            _kinosaal2, _film, _startzeit2, _endzeit, _datum, 0);
+            _kinosaal2, _film, _startzeit2, _endzeit, _datum,0);
 
 
     private Tagesplan _t;
