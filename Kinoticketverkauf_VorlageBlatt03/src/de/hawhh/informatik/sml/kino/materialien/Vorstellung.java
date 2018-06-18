@@ -140,7 +140,7 @@ public class Vorstellung {
 	 * 
 	 * @require platz != null
 	 */
-	public synchronized boolean hatPlatz(Platz platz) {
+	public boolean hatPlatz(Platz platz) {
 		assert platz != null : "Vorbedingung verletzt: platz != null";
 
 		return _kinosaal.hatPlatz(platz);
@@ -154,7 +154,7 @@ public class Vorstellung {
 	 * 
 	 * @return true, falls alle Plätze existieren, false sonst.
 	 */
-	public synchronized boolean hatPlaetze(Set<Platz> plaetze) {
+	public boolean hatPlaetze(Set<Platz> plaetze) {
 		assert plaetze != null : "Vorbedingung verletzt: plaetze != null";
 
 		boolean result = true;
@@ -165,7 +165,7 @@ public class Vorstellung {
 	}
 
 	/**
-	 * Gibt den Gesamtpreis für die angegebenen Plätze zurücke
+	 * Gibt den Gesamtpreis für die angegebenen Plätze zurück
 	 * 
 	 * @param plaetze
 	 *            die Sitzplätze.
@@ -175,7 +175,7 @@ public class Vorstellung {
 	 * @require plaetze != null
 	 * @require hatPlaetze(plaetze)
 	 */
-	public synchronized int getPreisFuerPlaetze(Set<Platz> plaetze) {
+	public int getPreisFuerPlaetze(Set<Platz> plaetze) {
 		assert plaetze != null : "Vorbedingung verletzt: plaetze != null";
 		assert hatPlaetze(plaetze) : "Vorbedingung verletzt: hatPlaetze(plaetze)";
 
@@ -194,7 +194,7 @@ public class Vorstellung {
 	 * @require platz != null
 	 * @require hatPlatz(platz)
 	 */
-	public synchronized boolean istPlatzVerkauft(Platz platz) {
+	public boolean istPlatzVerkauft(Platz platz) {
 		assert platz != null : "Vorbedingung verletzt: platz != null";
 		assert hatPlatz(platz) : "Vorbedingung verletzt: hatPlatz(platz)";
 
@@ -213,12 +213,13 @@ public class Vorstellung {
 	 * 
 	 * @ensure istPlatzVerkauft(reihe, sitz)
 	 */
-	public synchronized void verkaufePlatz(Platz platz) {
+	public void verkaufePlatz(Platz platz) {
 		assert platz != null : "Vorbedingung verletzt: platz != null";
 		assert hatPlatz(platz) : "Vorbedingung verletzt: hatPlatz(platz)";
 		assert !istPlatzVerkauft(platz) : "Vorbedingung verletzt: !istPlatzVerkauft(platz)";
 
 		_verkauft[platz.getReihenNr()][platz.getSitzNr()] = true;
+		_reserviert[platz.getReihenNr()][platz.getSitzNr()] = false;
 		_anzahlVerkauftePlaetze++;
 	}
 
@@ -234,7 +235,7 @@ public class Vorstellung {
 	 * 
 	 * @ensure !istPlatzVerkauft(reihe, sitz)
 	 */
-	public synchronized void stornierePlatz(Platz platz) {
+	public void stornierePlatz(Platz platz) {
 		assert platz != null : "Vorbedingung verletzt: platz != null";
 		assert hatPlatz(platz) : "Vorbedingung verletzt: hatPlatz(platz)";
 		// assert istPlatzVerkauft(platz) : "Vorbedingung verletzt:
@@ -250,14 +251,14 @@ public class Vorstellung {
 	/**
 	 * Gibt die Anzahl verkaufter Plätze zurück.
 	 */
-	public synchronized int getAnzahlVerkauftePlaetze() {
+	public int getAnzahlVerkauftePlaetze() {
 		return _anzahlVerkauftePlaetze;
 	}
 
 	/**
 	 * 
 	 */
-	public synchronized boolean istPlatzReserviert(Platz platz) {
+	public boolean istPlatzReserviert(Platz platz) {
 		assert platz != null : "Vorbedingung verletzt: platz != null";
 		assert hatPlatz(platz) : "Vorbedingung verletzt: hatPlatz(platz)";
 
@@ -267,7 +268,7 @@ public class Vorstellung {
 	/**
 	 * 
 	 */
-	public synchronized void reservierePlatz(Platz platz) {
+	public void reservierePlatz(Platz platz) {
 		assert platz != null : "Vorbedingung verletzt: platz != null";
 		assert hatPlatz(platz) : "Vorbedingung verletzt: hatPlatz(platz)";
 
@@ -281,7 +282,7 @@ public class Vorstellung {
 	/**
 	 * 
 	 */
-	public synchronized void reservierePlaetze(Set<Platz> plaetze) {
+	public void reservierePlaetze(Set<Platz> plaetze) {
 		assert plaetze != null : "Vorbedingung verletzt: platz != null";
 		assert hatPlaetze(plaetze) : "Vorbedingung verletzt: hatPlaetze(plaetze)";
 
@@ -296,7 +297,7 @@ public class Vorstellung {
 	/**
 	 * 
 	 */
-	public synchronized boolean sindReservierbar(Set<Platz> plaetze) {
+	public boolean sindReservierbar(Set<Platz> plaetze) {
 		assert plaetze != null : "Vorbedingung verletzt: platz != null";
 		assert hatPlaetze(plaetze) : "Vorbedingung verletzt: hatPlaetze(plaetze)";
 
@@ -308,11 +309,11 @@ public class Vorstellung {
 		return false;
 
 	}
-//
+
 //	/**
 //	 * 
 //	 */
-//	public synchronized void unreservierePlatz(Platz platz) {
+//	public void unreservierePlatz(Platz platz) {
 //		assert platz != null : "Vorbedingung verletzt: platz != null";
 //		assert hatPlatz(platz) : "Vorbedingung verletzt: hatPlatz(platz)";
 //
@@ -325,7 +326,7 @@ public class Vorstellung {
 //	/**
 //	 * 
 //	 */
-//	public synchronized void unreservierePlaetze(Set<Platz> plaetze)
+//	public void unreservierePlaetze(Set<Platz> plaetze)
 //	{
 //		assert plaetze != null : "Vorbedingung verletzt: platz != null";
 //		assert hatPlaetze(plaetze) : "Vorbedingung verletzt: hatPlaetze(plaetze)";
@@ -342,7 +343,7 @@ public class Vorstellung {
 //	/**
 //	 * 
 //	 */
-//	public synchronized boolean sindUnreservierbar(Set<Platz> plaetze)
+//	public boolean sindUnreservierbar(Set<Platz> plaetze)
 //	{
 //		assert plaetze != null : "Vorbedingung verletzt: platz != null";
 //		assert hatPlaetze(plaetze) : "Vorbedingung verletzt: hatPlaetze(plaetze)";
@@ -355,7 +356,7 @@ public class Vorstellung {
 //		return result;
 //	}
 	
-	public synchronized int getAnzahlReserviertePlaetze()
+	public int getAnzahlReserviertePlaetze()
 	{
 		return _anzahlReserviertePlaetze;
 	}
@@ -369,7 +370,7 @@ public class Vorstellung {
 	 * 
 	 * @ensure alle angegebenen Plätze sind verkauft
 	 */
-	public synchronized void verkaufePlaetze(Set<Platz> plaetze) {
+	public void verkaufePlaetze(Set<Platz> plaetze) {
 		assert plaetze != null : "Vorbedingung verletzt: plaetze != null";
 		assert hatPlaetze(plaetze) : "Vorbedingung verletzt: hatPlaetze(plaetze)";
 		assert sindVerkaufbar(plaetze) : "Vorbedingung verletzt: sindVerkaufbar(plaetze)";
@@ -377,6 +378,7 @@ public class Vorstellung {
 		for (Platz platz : plaetze) {
 			verkaufePlatz(platz);
 		}
+		
 	}
 
 	/**
@@ -388,7 +390,7 @@ public class Vorstellung {
 	 * @require plaetze != null
 	 * @require hatPlaetze(plaetze)
 	 */
-	public synchronized boolean sindVerkaufbar(Set<Platz> plaetze) {
+	public boolean sindVerkaufbar(Set<Platz> plaetze) {
 		assert plaetze != null : "Vorbedingung verletzt: plaetze != null";
 		assert hatPlaetze(plaetze) : "Vorbedingung verletzt: hatPlaetze(plaetze)";
 
@@ -408,7 +410,7 @@ public class Vorstellung {
 	 * 
 	 * @ensure alle angegebenen Plätze sind storniert
 	 */
-	public synchronized void stornierePlaetze(Set<Platz> plaetze) {
+	public void stornierePlaetze(Set<Platz> plaetze) {
 		assert plaetze != null : "Vorbedingung verletzt: plaetze != null";
 		assert hatPlaetze(plaetze) : "Vorbedingung verletzt: hatPlaetze(plaetze)";
 		// assert sindStornierbar(plaetze) : "Vorbedingung verletzt:
@@ -428,7 +430,7 @@ public class Vorstellung {
 	 * @require plaetze != null
 	 * @require hatPlaetze(plaetze)
 	 */
-	public synchronized boolean sindStornierbar(Set<Platz> plaetze) {
+	public boolean sindStornierbar(Set<Platz> plaetze) {
 		assert plaetze != null : "Vorbedingung verletzt: plaetze != null";
 		assert hatPlaetze(plaetze) : "Vorbedingung verletzt: hatPlaetze(plaetze)";
 

@@ -37,6 +37,7 @@ class Platzplan extends GridPane
     private EventHandler<ActionEvent> _buttonListener;
     private Set<Platz> _ausgewaehltePlaetze;
     private List<PlatzSelectionListener> _selectionListener;
+//    private Set<Platz> _reserviertePlaetze;
 
     /**
      * Initialisiert einen neuen, leeren Platzplan.
@@ -49,6 +50,7 @@ class Platzplan extends GridPane
         setVgap(5);
         erzeugePlatzAuswahlListener();
         _ausgewaehltePlaetze = new HashSet<Platz>();
+//        _reserviertePlaetze = new HashSet<Platz>();
         _selectionListener = new ArrayList<PlatzSelectionListener>();
     }
 
@@ -75,14 +77,21 @@ class Platzplan extends GridPane
                 if (_ausgewaehltePlaetze.contains(platz))
                 {
                     _ausgewaehltePlaetze.remove(platz);
+//                    _reserviertePlaetze.remove(platz);
+//                    button.setReserviert(false);
                     button.setAusgewaehlt(false);
-                    informiereSelectionListener(_ausgewaehltePlaetze);
+                    informiereSelectionListener(getAusgewaehltePlaetze());
+//                    informiereSelectionListener(_reserviertePlaetze);
                 }
                 else
                 {
+                	
                     _ausgewaehltePlaetze.add(platz);
+//                    _reserviertePlaetze.add(platz);
                     button.setAusgewaehlt(true);
-                    informiereSelectionListener(_ausgewaehltePlaetze);
+//                    button.setReserviert(true);
+                    informiereSelectionListener(getAusgewaehltePlaetze());
+//                    informiereSelectionListener(_reserviertePlaetze);
                 }
             }
         };
@@ -207,9 +216,22 @@ class Platzplan extends GridPane
      */
     public Set<Platz> getAusgewaehltePlaetze()
     {
-        return new HashSet<Platz>(_ausgewaehltePlaetze);
+    	Set<Platz> summe = new HashSet<Platz>(_ausgewaehltePlaetze);
+//    	for(Platz platz : getReserviertePlaetze())
+//    	{
+//    		summe.add(platz);
+//    		
+//    	}
+    
+        return summe;
     }
+    
+//    public Set<Platz> getReserviertePlaetze()
+//    {
+//    	return new HashSet<Platz>(_reserviertePlaetze);
+//    }
 
+   
     /**
      * Entfernt die Auswahl, sodass keine Plätze mehr ausgewählt sind.
      */
@@ -235,6 +257,7 @@ class Platzplan extends GridPane
     {
         assert platz != null : "Vorbedingung verletzt: platz != null";
         _buttons[platz.getReihenNr()][platz.getSitzNr()].setVerkauft(true);
+        _buttons[platz.getReihenNr()][platz.getSitzNr()].setReserviert(false);
 //        repaint();
     }
 
@@ -250,6 +273,7 @@ class Platzplan extends GridPane
     {
         assert platz != null : "Vorbedingung verletzt: platz != null";
         _buttons[platz.getReihenNr()][platz.getSitzNr()].setVerkauft(false);
+        _buttons[platz.getReihenNr()][platz.getSitzNr()].setReserviert(false);
 //        repaint();
     }
     

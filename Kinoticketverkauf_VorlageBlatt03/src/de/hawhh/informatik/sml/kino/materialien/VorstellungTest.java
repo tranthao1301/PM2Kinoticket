@@ -11,7 +11,6 @@ import org.junit.Before;
 import org.junit.Test;
 import de.hawhh.informatik.sml.kino.fachwerte.Datum;
 import de.hawhh.informatik.sml.kino.fachwerte.FSK;
-import de.hawhh.informatik.sml.kino.fachwerte.Geldbetrag;
 import de.hawhh.informatik.sml.kino.fachwerte.Platz;
 import de.hawhh.informatik.sml.kino.fachwerte.Uhrzeit;
 

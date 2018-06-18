@@ -98,12 +98,7 @@ public final class Geldbetrag {
 	 * @param String eingabe das zu konvertierende String
 	 */
 	public static Geldbetrag strconv(String eingabe) 
-//			throws NumberFormatException
 	{
-//		if (morethan(1, eingabe, ',') || morethan(0, eingabe, '-'))
-//		{
-//			throw new NumberFormatException();
-//		}
 		String[] zahlen = eingabe.split("[,]");
 		if (eingabe.contains(",") && zahlen.length > 1)
 		{
@@ -128,19 +123,7 @@ public final class Geldbetrag {
 		}
 	}
 	
-	
-	private static boolean morethan(int occ, String haystack, char needle)
-	{
-		int count = 0;
-		for (int i = 0; i < haystack.length(); i++) {
-			if (haystack.charAt(i) == needle)
-			{
-				count++;
-			}
-		}
-		return count > occ;
-	}
-	
+			
 	@Override
 	public String toString()
 	{

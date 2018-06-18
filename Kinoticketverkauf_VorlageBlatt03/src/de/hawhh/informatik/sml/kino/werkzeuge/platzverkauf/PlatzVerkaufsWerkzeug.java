@@ -91,6 +91,7 @@ public class PlatzVerkaufsWerkzeug {
 			@Override
 			public void auswahlGeaendert(PlatzSelectionEvent event) {
 				reagiereAufNeuePlatzAuswahl(event.getAusgewaehltePlaetze());
+				
 			}
 		});
 	}
@@ -101,12 +102,14 @@ public class PlatzVerkaufsWerkzeug {
 	 * @param plaetze
 	 *            die jetzt ausgewählten Plätze.
 	 */
-	private void reagiereAufNeuePlatzAuswahl(Set<Platz> plaetze) {
-		if (istReservierenMoeglich(plaetze)) {
-			_vorstellung.reservierePlaetze(plaetze);
-			_ui.getVerkaufenButton().setDisable(!istVerkaufenMoeglich(plaetze));
-		}
+	private void reagiereAufNeuePlatzAuswahl(Set<Platz> plaetze) {	
+		_ui.getVerkaufenButton().setDisable(!istVerkaufenMoeglich(plaetze));
+		
 		_ui.getStornierenButton().setDisable(!istStornierenMoeglich(plaetze));
+		if(_vorstellung!=null)
+		{
+			_vorstellung.reservierePlaetze(plaetze);
+		}
 		aktualisierePreisanzeige(plaetze);
 	}
 
@@ -136,13 +139,15 @@ public class PlatzVerkaufsWerkzeug {
 	 * Prüft, ob die angegebenen Plätze alle verkauft werden können.
 	 */
 	private boolean istVerkaufenMoeglich(Set<Platz> plaetze) {
-		return !plaetze.isEmpty() && _vorstellung.sindVerkaufbar(plaetze);
+		boolean ergebnis = !plaetze.isEmpty() && _vorstellung.sindVerkaufbar(plaetze);
+		
+		return ergebnis;
 	}
 	
-	private boolean istReservierenMoeglich(Set<Platz> plaetze)
-	{
-		return !plaetze.isEmpty() && _vorstellung.sindReservierbar(plaetze);
-	}
+//	private boolean istReservierenMoeglich(Set<Platz> plaetze)
+//	{
+//		return !plaetze.isEmpty() && _vorstellung.sindReservierbar(plaetze);
+//	}
 	
 //	private boolean istUnreservierenMoeglich(Set<Platz> plaetze)
 //	{
@@ -174,6 +179,7 @@ public class PlatzVerkaufsWerkzeug {
 				else if(_vorstellung.istPlatzReserviert(platz)) {
 					_ui.getPlatzplan().markierePlatzsAlsReserviert(platz);
 				}
+				
 			}
 		} else {
 			_ui.getPlatzplan().setAnzahlPlaetze(0, 0);
